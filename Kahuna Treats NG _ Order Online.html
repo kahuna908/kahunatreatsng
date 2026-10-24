@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kahuna Treats NG | Order Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#FFF4E0; --surface:#FFFFFF; --text:#1E2A2E; --muted:#4B5A5E; --brand:#0F5C63;
+  --line:#E8D9BC; --btn-bg:#0F5C63; --btn-fg:#FFF4E0; --cta-bg:#F26B1D; --cta-fg:#1E2A2E;
+  --head-bg:#0F5C63; --head-fg:#FFF4E0; --input-bg:#FFFBF2; --sun:#FFC145; --err:#B3261E;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0D2326; --surface:#143A3F; --text:#FFF4E0; --muted:#B9CBCB; --brand:#FFC145;
+    --line:#24545A; --btn-bg:#FFC145; --btn-fg:#1E2A2E; --input-bg:#0D2326; --head-bg:#0B3E44; --err:#FFB4AB;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0D2326; --surface:#143A3F; --text:#FFF4E0; --muted:#B9CBCB; --brand:#FFC145;
+  --line:#24545A; --btn-bg:#FFC145; --btn-fg:#1E2A2E; --input-bg:#0D2326; --head-bg:#0B3E44; --err:#FFB4AB;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.45;padding-bottom:110px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--head-bg);z-index:10}
+header{background:var(--head-bg);color:var(--head-fg);padding:22px 20px 26px;display:flex;align-items:center;gap:16px}
+header svg{flex:none;width:68px;height:68px}
+h1{font-family:'Lilita One',sans-serif;font-weight:400;font-size:32px;line-height:1.05;margin:0}
+.tag{margin:4px 0 0;font-weight:700;color:var(--sun)}
+main{max-width:560px;margin:0 auto;padding:18px 16px 0}
+h2{font-family:'Lilita One',sans-serif;font-weight:400;font-size:24px;letter-spacing:1px;margin:22px 0 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:4px 16px}
+.item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0}
+.name{font-weight:700;font-size:17px}
+.desc{color:var(--muted);font-size:14px}
+.price{font-weight:700;color:var(--brand)}
+.step{display:flex;align-items:center;gap:6px;flex:none}
+.step button{width:44px;height:44px;border-radius:50%;border:0;background:var(--btn-bg);color:var(--btn-fg);font-size:22px;font-weight:700;cursor:pointer}
+.step button:focus-visible,.cta:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.q{min-width:26px;text-align:center;font-weight:700;font-size:18px}
+.form{padding:14px 16px 18px}
+label{display:block;font-weight:700;margin:12px 0 6px}
+input[type=text],textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:var(--text);background:var(--input-bg);border:1.5px solid var(--line);border-radius:12px;padding:12px}
+textarea{min-height:76px;resize:vertical}
+.modes{display:flex;gap:10px}
+.modes label{flex:1;margin:0;font-weight:700}
+.modes input{position:absolute;opacity:0}
+.modes span{display:block;text-align:center;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--input-bg);cursor:pointer}
+.modes input:checked + span{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-bg)}
+.modes input:focus-visible + span{outline:3px solid var(--sun);outline-offset:2px}
+.note{color:var(--muted);font-size:14px;margin:18px 4px 0;text-align:center}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));z-index:5}
+.bar-in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.sum{flex:1;line-height:1.2}
+.sum b{font-size:20px;display:block}
+.sum span{color:var(--muted);font-size:14px}
+.cta{flex:none;background:var(--cta-bg);color:var(--cta-fg);font-weight:700;font-size:16px;text-decoration:none;padding:14px 18px;border-radius:999px;min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center}
+.cta[aria-disabled="true"]{opacity:.55}
+#msg{color:var(--err);font-weight:700;font-size:14px;min-height:20px;margin:8px 0 0}
+</style>
+</head>
+<body>
+<header>
+<svg viewBox="0 0 200 200" role="img" aria-label="Kahuna Treats NG logo">
+<circle cx="100" cy="100" r="96" fill="#F26B1D"></circle>
+<path d="M78 56 L86 36 L100 48 L114 36 L122 56 Z" fill="#FFC145" stroke="#1E2A2E" stroke-width="4" stroke-linejoin="round"></path>
+<path d="M62 92 q9 -18 18 0 t18 0 t18 0 t18 0" fill="none" stroke="#FFF4E0" stroke-width="8" stroke-linecap="round"></path>
+<path d="M58 112 q10 -20 20 0 t20 0 t20 0 t20 0" fill="none" stroke="#FFC145" stroke-width="8" stroke-linecap="round"></path>
+<path d="M44 120 H156 C156 156 130 174 100 174 C70 174 44 156 44 120 Z" fill="#1E2A2E"></path>
+<rect x="38" y="116" width="124" height="9" rx="4.5" fill="#FFF4E0"></rect>
+</svg>
+<div>
+<h1>Kahuna Treats NG</h1>
+<p class="tag">Boss-level noodles.</p>
+</div>
+</header>
+<main>
+<h2>NOODLE COMBOS</h2>
+<div class="card" id="combos"></div>
+<h2>EXTRAS</h2>
+<div class="card" id="extras"></div>
+<h2>YOUR DETAILS</h2>
+<div class="card form">
+<div class="modes" role="radiogroup" aria-label="Pickup or delivery">
+<label><input type="radio" name="mode" value="delivery" checked><span>Delivery</span></label>
+<label><input type="radio" name="mode" value="pickup"><span>Pickup at stall</span></label>
+</div>
+<label for="name">Your name</label>
+<input type="text" id="name" autocomplete="name" placeholder="e.g. Chioma">
+<div id="addrbox">
+<label for="addr">Delivery address</label>
+<textarea id="addr" autocomplete="street-address" placeholder="Street, area, landmark"></textarea>
+</div>
+<label for="note">Notes (optional)</label>
+<input type="text" id="note" placeholder="e.g. extra spicy, no egg">
+<p id="msg" role="alert"></p>
+</div>
+<p class="note">We’ll confirm your order, delivery fee and time on WhatsApp. Follow us on IG &amp; TikTok: @kahunatreatsng</p>
+</main>
+<div class="bar">
+<div class="bar-in">
+<div class="sum"><b id="total">₦0</b><span id="count">Your cart is empty</span></div>
+<a class="cta" id="wa" href="#" target="_blank" rel="noopener" aria-disabled="true">Order on WhatsApp</a>
+</div>
+</div>
+<script>
+(function(){
+  var WA = '2347079062559';
+  var combos = [
+    {id:'mini', name:'Mini Kahuna', desc:'Indomie, egg and veggies. The starter.', price:2500},
+    {id:'big', name:'Big Kahuna', desc:'Fully loaded. For the real boss.', price:3000},
+    {id:'fire', name:'Kahuna Fire', desc:'Extra spicy. Handle with care.', price:2600}
+  ];
+  var extras = [
+    {id:'egg', name:'Fried egg', desc:'', price:700},
+    {id:'chicken', name:'Chicken', desc:'', price:1200},
+    {id:'sausage', name:'Sausage', desc:'', price:800},
+    {id:'pepper', name:'Extra pepper', desc:'', price:200}
+  ];
+  var all = combos.concat(extras), qty = {};
+  function fmt(n){ return '\u20A6' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function render(el, list){
+    el.innerHTML = list.map(function(i){
+      return '<div class="item"><div><div class="name">' + i.name + '</div>' +
+        (i.desc ? '<div class="desc">' + i.desc + '</div>' : '') +
+        '<div class="price">' + fmt(i.price) + '</div></div>' +
+        '<div class="step"><button type="button" data-act="dec" data-id="' + i.id + '" aria-label="Remove one ' + i.name + '">\u2212</button>' +
+        '<span class="q" id="q-' + i.id + '" aria-live="polite">0</span>' +
+        '<button type="button" data-act="inc" data-id="' + i.id + '" aria-label="Add one ' + i.name + '">+</button></div></div>';
+    }).join('');
+  }
+  render(document.getElementById('combos'), combos);
+  render(document.getElementById('extras'), extras);
+  var nameEl = document.getElementById('name'), addrEl = document.getElementById('addr'),
+      noteEl = document.getElementById('note'), msg = document.getElementById('msg'),
+      wa = document.getElementById('wa'), addrBox = document.getElementById('addrbox');
+  function mode(){ return document.querySelector('input[name=mode]:checked').value; }
+  function totals(){
+    var c = 0, t = 0;
+    all.forEach(function(i){ var q = qty[i.id] || 0; c += q; t += q * i.price; });
+    return {count:c, total:t};
+  }
+  function message(){
+    var s = totals(), lines = ['Hello Kahuna Treats NG! I’d like to place an order:', ''];
+    all.forEach(function(i){ var q = qty[i.id] || 0; if(q){ lines.push('• ' + q + ' × ' + i.name + ' (' + fmt(q * i.price) + ')'); } });
+    lines.push('', 'Total: ' + fmt(s.total) + ' (delivery fee, if any, to be confirmed)');
+    lines.push('Name: ' + nameEl.value.trim());
+    lines.push(mode() === 'delivery' ? 'Delivery to: ' + addrEl.value.trim() : 'Pickup at the stall');
+    if(noteEl.value.trim()){ lines.push('Note: ' + noteEl.value.trim()); }
+    return lines.join('\n');
+  }
+  function update(){
+    var s = totals();
+    all.forEach(function(i){ document.getElementById('q-' + i.id).textContent = qty[i.id] || 0; });
+    document.getElementById('total').textContent = fmt(s.total);
+    document.getElementById('count').textContent = s.count ? s.count + (s.count === 1 ? ' item' : ' items') : 'Your cart is empty';
+    addrBox.style.display = mode() === 'delivery' ? 'block' : 'none';
+    wa.setAttribute('aria-disabled', s.count ? 'false' : 'true');
+    wa.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(message());
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-act]');
+    if(!b) return;
+    var id = b.getAttribute('data-id'), q = qty[id] || 0;
+    qty[id] = b.getAttribute('data-act') === 'inc' ? Math.min(q + 1, 20) : Math.max(q - 1, 0);
+    msg.textContent = '';
+    update();
+  });
+  ['input','change'].forEach(function(ev){ document.addEventListener(ev, function(e){ if(e.target.closest('.form')){ msg.textContent = ''; update(); } }); });
+  wa.addEventListener('click', function(e){
+    var s = totals(), err = '', focusEl = null;
+    if(!s.count){ err = 'Add at least one item to your order.'; }
+    else if(!nameEl.value.trim()){ err = 'Please enter your name.'; focusEl = nameEl; }
+    else if(mode() === 'delivery' && !addrEl.value.trim()){ err = 'Please enter your delivery address.'; focusEl = addrEl; }
+    if(err){ e.preventDefault(); msg.textContent = err; if(focusEl){ focusEl.focus(); } else { window.scrollTo({top:0,behavior:'smooth'}); } }
+  });
+  update();
+})();
+</script>
+</body>
+</html>
